@@ -8,22 +8,29 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  
+  <div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+  </div>
 
-  <h1> <%= kindOfDay %> </h1>
+  <div class="box">
+    <% for( let i = 0; i < newListItems.length; i++ ) { %>
+    <div class="item">
+      <input type="checkbox">
+      <p> <%= newListItems[i] %> </p>
+    </div>
+    <% } %>
 
-  <ul>
-<% for( let i = 0; i < newListItems.length; i++ ) { %>
-  <li> <%= newListItems[i] %>  </li>
-<% } %>
-  </ul>
+    <form class="item" action="/" method="post">
+      <input autocomplete="off" type="text" name="newItem" placeholder="New Item">
+      <button type="submit" name="btn">+</button>
+    </form>
 
-  <form action="/" method="post">
-    <input type="text" name="newItem">
-    <button type="submit" name="btn">Add</button>
-  </form>
+  </div>
 
   <footer>
-    <p>Made with by 💛 <a href="https://siphesihlethomo.com">Siphesihle Thomo</a>.</p>
+    <p>Made with by 💜 <a href="https://siphesihlethomo.com">Siphesihle Thomo</a>.</p>
   </footer>
+
 </body>
 </html>
