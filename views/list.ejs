@@ -14,7 +14,7 @@
   </div>
 
   <div class="box">
-    <% for( let i = 0; i < newListItems.length; i++ ) { %>
+    <% for (let i = 0; i < newListItems.length; i++ ) { %>
     <div class="item">
       <input type="checkbox">
       <p> <%= newListItems[i] %> </p>
@@ -22,8 +22,8 @@
     <% } %>
 
     <form class="item" action="/" method="post">
-      <input autocomplete="off" type="text" name="newItem" placeholder="New Item">
-      <button type="submit" name="btn">+</button>
+      <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+      <button type="submit" name="list" value=<%= listTitle %> >+</button>
     </form>
 
   </div>
