@@ -49,9 +49,12 @@ app.get('/:listName', (req, res) =>{
           items: defaultItems
         });
         list.save();
-        res.redirect('/'+ listName)
+        res.redirect(`/${listName}`)
       } else {
-        res.render('list', {listTitle: foundList.name, newListItems:foundList.items})
+        res.render('list', {
+          listTitle: foundList.name,
+          newListItems:foundList.items
+        })
       }
     }
   });
@@ -60,7 +63,6 @@ app.get('/:listName', (req, res) =>{
 app.get("/", (req, res) => {
 
   Item.find((err, items) => {
-
     if(items.length === 0){
       Item.insertMany(defaultItems, err =>{
         if(err){
@@ -76,7 +78,6 @@ app.get("/", (req, res) => {
         newListItems: items
       });
     }
-
   });
 
 });
@@ -84,21 +85,21 @@ app.get("/", (req, res) => {
 app.post('/', (req, res) => {
 
   const itemName = req.body.newItem;
-  const listName = req.body.btn;
+  const listName = req.body.list;
 
   const item = new Item({
     name: itemName
   });
 
   if(listName === 'Today'){
-    item.save()
-    res.redirect('/')
+    item.save();
+    res.redirect('/');
   } else {
     List.findOne({name: listName}, (err, foundList) => {
       if(!err){
         foundList.items.push(item);
         foundList.save();
-        res.redirect('/'+ listName);
+        res.redirect(`/${listName}`);
       } else {
         console.log(err);
       }
@@ -114,14 +115,14 @@ app.post('/delete', (req, res) => {
   if(listName === 'Today'){
     Item.findByIdAndRemove(checkedItemId, err =>{
       if (!err){
-        console.log('Removed Item');
+        console.log('Deleted Item');
         res.redirect('/');
       }
     });
   } else {
     List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, (err, foundList) =>{
       if(!err){
-        res.redirect('/'+ listName);
+        res.redirect(`/${listName}`);
       }
     });
   }
