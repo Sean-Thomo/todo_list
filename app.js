@@ -31,6 +31,32 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
+const listSchema = {
+  name: String,
+  items: [itemSchema]
+}
+
+const List = mongoose.model('List', listSchema)
+
+app.get('/:listName', (req, res) =>{
+  const listName = req.params.listName;
+
+  List.findOne({name: listName}, (err, foundList) => {
+    if(!err){
+      if(!foundList){
+        const list = new List({
+          name: listName,
+          items: defaultItems
+        });
+        list.save();
+        res.redirect('/'+ listName)
+      } else {
+        res.render('list', {listTitle: foundList.name, newListItems:foundList.items})
+      }
+    }
+  })
+})
+
 app.get("/", (req, res) => {
 
   Item.find((err, items) => {
@@ -74,11 +100,16 @@ app.post('/', (req, res) => {
 
 });
 
-app.get('/work', (req, res) => {
-  res.render('list', {
-    listTitle: 'Work List',
-    newListItems: workItems
+app.post('/delete', (req, res) => {
+  const checkedItemId = req.body.checkbox;
+
+  Item.findByIdAndRemove(checkedItemId, err =>{
+    if (!err){
+      console.log('Removed Item');
+      res.redirect('/')
+    }
   })
+
 })
 
 app.post('/work', (req, res) => {
