@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -8,23 +9,43 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
 
-let items =[];
-let workItems =[];
+// const items =[];
+// const workItems =[];
+
+mongoose.connect('mongodb://localhost:27017/todolistDB')
+
+const itemSchema = {
+  name: String
+}
+
+const Item = mongoose.model('Item', itemSchema)
+
+const testing = new Item({
+  name : 'Run tests'
+})
+
+const code = new Item({
+  name : 'Code for an hour'
+})
+
+const exercise = new Item({
+  name : 'Jog for 30 mins'
+})
+
+const defaultItems = [testing, code, exercise];
+
+Item.insertMany(defaultItems, err =>{
+  if(err){
+    console.log(err)
+  } else {
+    console.log('All documents have been added.');
+  }
+})
 
 app.get("/", (req, res) => {
 
-  const today = new Date();
-
-  let options = {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long'
-  };
-
-  let day = today.toLocaleDateString('en-US', options);
-
   res.render('list', {
-    listTitle: day,
+    listTitle: 'Today',
     newListItems: items
   });
 
