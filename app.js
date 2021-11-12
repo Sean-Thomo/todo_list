@@ -9,9 +9,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
 
-// const items =[];
-// const workItems =[];
-
 mongoose.connect('mongodb://localhost:27017/todolistDB')
 
 const itemSchema = {
@@ -20,47 +17,60 @@ const itemSchema = {
 
 const Item = mongoose.model('Item', itemSchema)
 
-const testing = new Item({
-  name : 'Run tests'
+const item1 = new Item({
+  name : 'Welcome to your todolist!'
 })
 
-const code = new Item({
-  name : 'Code for an hour'
+const item2 = new Item({
+  name : 'Hit the + button to add a new task'
 })
 
-const exercise = new Item({
-  name : 'Jog for 30 mins'
+const item3 = new Item({
+  name : '<-- Hit this to cross out an item'
 })
 
-const defaultItems = [testing, code, exercise];
-
-Item.insertMany(defaultItems, err =>{
-  if(err){
-    console.log(err)
-  } else {
-    console.log('All documents have been added.');
-  }
-})
+const defaultItems = [item1, item2, item3];
 
 app.get("/", (req, res) => {
 
-  res.render('list', {
-    listTitle: 'Today',
-    newListItems: items
-  });
+  Item.find((err, items) => {
+
+    if(items.length === 0){
+      Item.insertMany(defaultItems, err =>{
+        if(err){
+          console.log(err)
+        } else {
+          console.log('All documents have been added.');
+        }
+      })
+      res.redirect('/')
+    } else {
+      res.render('list', {
+        listTitle: 'Today',
+        newListItems: items
+      });
+    }
+
+  })
 
 });
 
 app.post('/', (req, res) => {
-  item = req.body.newItem;
 
-  if (req.body.list == 'Work'){
-    workItems.push(item)
-    res.redirect('/work')
-  } else {
-    items.push(item);
-    res.redirect('/')
-  }
+  const itemName = req.body.newItem;
+
+  const item = new Item({
+    name: itemName
+  })
+  item.save()
+  res.redirect('/')
+
+  // if (req.body.list == 'Work'){
+  //   workItems.push(item)
+  //   res.redirect('/work')
+  // } else {
+  //   items.push(item);
+  // }
 
 });
 
