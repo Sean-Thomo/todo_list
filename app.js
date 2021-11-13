@@ -115,7 +115,6 @@ app.post('/delete', (req, res) => {
   if(listName === 'Today'){
     Item.findByIdAndRemove(checkedItemId, err =>{
       if (!err){
-        console.log('Deleted Item');
         res.redirect('/');
       }
     });
