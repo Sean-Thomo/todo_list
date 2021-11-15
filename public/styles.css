@@ -1,6 +1,6 @@
 html {
   background-color: #E4E9FD;
-  background-image: -webkit-linear-gradient(65deg, #A683E3 43%, #E4E9FD 57%);
+  background-image: -webkit-linear-gradient(65deg, #2E95F1 43%, #E4E9FD 57%);
   min-height: 1000px;
   font-family: 'helvetica neue';
 }
@@ -12,6 +12,7 @@ h1 {
 
 a {
   text-decoration: none;
+  color: #2E95F1;
 }
 
 footer p {
@@ -27,7 +28,7 @@ footer p {
 }
 
 #heading {
-  background-color: #A683E3;
+  background-color: #2E95F1;
   text-align: center;
 }
 
@@ -44,7 +45,7 @@ footer p {
 
 input:checked+p {
   text-decoration: line-through;
-  text-decoration-color: #A683E3;
+  text-decoration-color: #36454F;
 }
 
 input[type="checkbox"] {
@@ -69,7 +70,7 @@ button {
   width: 50px;
   border-radius: 50%;
   border-color: transparent;
-  background-color: #A683E3;
+  background-color: #2E95F1;
   color: #fff;
   font-size: 30px;
   padding-bottom: 6px;
@@ -89,7 +90,7 @@ input[type="text"] {
 
 input[type="text"]:focus {
   outline: none;
-  box-shadow: inset 0 -3px 0 0 #A683E3;
+  box-shadow: inset 0 -3px 0 0 #2a2138;
 }
 
 ::placeholder {
