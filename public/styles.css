@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700&display=swap');
+
 html {
   background-color: #E4E9FD;
   background-image: -webkit-linear-gradient(65deg, #2E95F1 43%, #E4E9FD 57%);
   min-height: 1000px;
-  font-family: 'helvetica neue';
+  font-family: 'Nunito', sans-serif;
 }
 
 h1 {
